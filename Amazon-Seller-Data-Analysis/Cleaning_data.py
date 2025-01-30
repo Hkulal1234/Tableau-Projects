@@ -33,12 +33,10 @@ data['year'] = data['order_date'].dt.year
 print(data[['order_date', 'day_of_week', 'time', 'month', 'year']])
 
 #remove rupees from field
-data['item_total'] = data['item_total'].str.replace(r'₹','',regex=True)
-print(data['item_total'])
-data['shipping_fee'] = data['shipping_fee'].str.replace(r'₹','',regex=True)
-data['item_total'] = pd.to_numeric(data['item_total'], errors='coerce')
-data['shipping_fee'] = pd.to_numeric(data['shipping_fee'], errors='coerce')
-print (data.dtypes)
+data['item_total'] = data['item_total'].str.replace(r'₹','',regex=True).str.replace(',','').astype(float)
+data['shipping_fee'] = data['shipping_fee'].str.replace(r'₹','',regex=True).str.replace(',','').astype(float)
+
+
 
 #only first letter to be capitalised and removed trailling comma : CHANDIGARH, -> Chandigarh
 data['ship_city'] = data['ship_city'].str.capitalize().str.rstrip(',')
